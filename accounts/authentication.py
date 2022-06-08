@@ -8,13 +8,18 @@ from . import models
 class CustomAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
         # return super().authenticate(request)
-        token = request.COOKIES.get("jwt")
-        # print('Cookie Recieved-----',token)
+        print("in serializer")
+        token = request.headers.get('Authorization')
+        print("token is : ",token)
         if not token:
-            raise exceptions.AuthenticationFailed("Credentials Not Found ..Please Login ")
+            raise exceptions.AuthenticationFailed("Credentials Not Found ..Please Login")
+        
         try: 
-            payload = jwt.decode(token, settings.JWT_SECRET, algorithms=['HS256'])
+            payload = jwt.decode(token,settings.SECRET_KEY,algorithms=['HS256'])
+            print(payload['email'])
+            # payload = jwt.decode(token, settings.JWT_SECRET, algorithms=['HS256'])
         except:
             raise exceptions.AuthenticationFailed("Unauthorized")
-        user = models.MyUser.objects.filter(id=payload["id"]).first()
+        
+        user = models.MyUser.objects.filter(email=payload["email"]).first()
         return (user, None)

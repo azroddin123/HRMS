@@ -1,35 +1,20 @@
-from django.shortcuts import render
-from yaml import serialize
-
+from django.conf import settings
 from .serializers import MyUserSerializer
 from .models import *
+from accounts.authentication import CustomAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
-from django.contrib.auth import get_user_model
-from rest_framework import status, permissions
-
-from random import randint
-import datetime
-from datetime import timedelta
+from rest_framework import status
 import jwt
-from django.conf import settings
+from . import authentication
 
+def generate_token(email) : 
+    payload = {
+        'email' : email
+    }
+    token = jwt.encode(payload,settings.SECRET_KEY,algorithm="HS256")
+    return token
 
-# def create_token(user):
-#     payload = {
-#         'id': user_id,
-#         'exp' = datetime.datetime.utcnow() + datetime.timedelta(hours=24)
-#         'iat' = datetime.datetime.utcnow()
-#     }
-
-#     token = jwt.encode(payload, settings.JWT_SECRET, algorithm="HS256")
-
-#     return token
-
-
-# Create your views here.
-MyUser = get_user_model()
 
 class RegisterApi(APIView):
     def post(self, request, *args, **kwargs):
@@ -37,17 +22,9 @@ class RegisterApi(APIView):
         serializer = MyUserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            token = generate_token(request.data['email'])
+            return Response(data = { "data" : serializer.data , "token" :  token }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class UserApi(APIView):
-    def get(self, request, *args, **kargs):
-        users = MyUser.objects.all()
-        serializer = MyUserSerializer(users, many=True)
-        if serializer:
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class LoginApi(APIView):
     def post(self, request):
@@ -55,26 +32,37 @@ class LoginApi(APIView):
         password = request.data["password"]
         print(email, password)
         user = MyUser.objects.filter(email=email).first()
-        print(user)
+        print("user is",user.email)
+        token = generate_token(user.email)
+        print(token)
         if user is None:
-            return Response(
-                {"status": 404, "message": "User is not registered"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-            # raise exceptions.AuthenticationFailed("Invalid Credentials")
+            return Response({"message": "User is not registered"},status=status.HTTP_404_NOT_FOUND,)
         if not user.check_password(raw_password=password):
-            return Response(
-                {"status": 400, "message": "Wrong Password"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-            # raise exceptions.AuthenticationFailed("Invalid Credentials")
-        # token = create_token(user_id=user.id)
+            return Response({"status": 400, "message": "Wrong Password"},status=status.HTTP_400_BAD_REQUEST)
         serializer = MyUserSerializer(user)
-        return Response(
-            {
-                "message": "User logged in successfully",
-                "user_info": serializer.data,
-                "access_token": token,
-            },
-            status=status.HTTP_200_OK,
-        )
+        return Response({"message": "User logged in successfully","user_info": serializer.data,"token" : token },status=status.HTTP_200_OK,)
+
+
+class UserApi(APIView):
+    authentication_classes = [CustomAuthentication]
+    def get(self, request, *args, **kargs):
+        user = request.user
+        serializer = MyUserSerializer(user)
+        if serializer:
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+
+    # def put(self, request, id, *args, **Kwargs):
+    #     user = MyUser.objects.get(id=id)
+    #     if not user:
+    #         return Response("user not found")
+    #     print(request.data)
+    #     serializer = MyUserSerializer(user, data=request.data)
+    #     if serializer.is_valid():
+    #         return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
+    #     return Response(error=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+

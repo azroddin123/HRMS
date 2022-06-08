@@ -5,7 +5,14 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
-from sqlalchemy import true
+
+from django.db import connection
+
+
+ROLE_CHOICES = (
+    ("Applicant", "Applicant"),
+    ('Recruiter', "Recruiter"),
+)
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -36,12 +43,10 @@ class MyUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
+    name = models.TextField(max_length=200,default="Rafik Bhai Shaikh",null=True,blank=True)
     is_admin = models.BooleanField(default=False)
-    username = models.CharField(max_length=100,null=True,default="JohnSnow")
-    password = models.CharField(max_length=100,null=True,blank=True)
-    isActive = models.BooleanField(default=False)
-    # image = models.ImageField(upload_to='media/')
-    mobile_number = models.CharField(max_length=200,null=True,blank=True)
+    role = models.CharField(max_length=40,choices=ROLE_CHOICES, default="Applicant")
+    image = models.ImageField(upload_to='media/',blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True,editable=False)
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager()
