@@ -8,6 +8,7 @@ from rest_framework import status
 import jwt
 from . import authentication
 
+
 def generate_token(email) : 
     payload = {
         'email' : email
@@ -32,6 +33,8 @@ class LoginApi(APIView):
         password = request.data["password"]
         print(email, password)
         user = MyUser.objects.filter(email=email).first()
+        if not user : 
+            return Response({"data" : "User Not Exists"},status=status.HTTP_200_OK)
         print("user is",user.email)
         token = generate_token(user.email)
         print(token)

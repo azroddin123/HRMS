@@ -29,4 +29,6 @@ urlpatterns = [
     path('accomplishment/<int:pk>',AccomplishmentApiView.as_view()),
     path('accomplishment',AccomplishmentApiView.as_view()),
     
+    path('userprofileview/<int:pk>',UserProfileApiView.as_view())
+    
 ]

@@ -5,7 +5,6 @@ from .views import *
 urlpatterns = [
     # path('<int:id>',ApplicantDetailView.as_view()),
     # path('person/<int:id>',PersonDetailView.as_view()),
-    
   
     path('profile/<int:pk>',RecruiterDetailView.as_view()),
     path('profile',RecruiterDetailView.as_view()),
@@ -19,8 +18,8 @@ urlpatterns = [
     path('perks/<int:pk>',PerkView.as_view()),
     path('perks',PerkView.as_view()),
         
-    path('requirement/<int:pk>',RequirementView.as_view()),
-    path('requirement',RequirementView.as_view()),
+    # path('requirement/<int:pk>',RequirementView.as_view()),
+    # path('requirement',RequirementView.as_view()),
    
     path('responsibilities/<int:pk>',ResponsibilitiesView.as_view()),
     path('responsibilities',ResponsibilitiesView.as_view()),
@@ -31,4 +30,6 @@ urlpatterns = [
     path('required_skill/<int:pk>',Required_SkillView.as_view()),
     path('required_skill',Required_SkillView.as_view()),
     
+    path('company_view/<int:pk>',CompanyRecruiterView.as_view()),
+    # path('applicantProfiles',GetCandidateProfileView.as_view())
 ]

@@ -46,7 +46,7 @@ class MyUser(AbstractBaseUser):
     name = models.TextField(max_length=200,default="Rafik Bhai Shaikh",null=True,blank=True)
     is_admin = models.BooleanField(default=False)
     role = models.CharField(max_length=40,choices=ROLE_CHOICES, default="Applicant")
-    image = models.ImageField(upload_to='media/',blank=True,null=True)
+    
     created_at = models.DateTimeField(auto_now_add=True,editable=False)
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager()

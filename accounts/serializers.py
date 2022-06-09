@@ -4,6 +4,7 @@ from .models import MyUser
 
 class MyUserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={"input_type": "password"}, write_only=True)
+    password = serializers.CharField(style={"input_type": "password"}, write_only=True)
     class Meta:
         model = MyUser
         fields = ['id',"email", "role", "password", "password2","name"]
