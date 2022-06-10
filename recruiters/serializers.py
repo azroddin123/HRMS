@@ -3,6 +3,7 @@ from numpy import source
 from pyrsistent import field
 from requests import request
 from rest_framework import serializers
+from applicants.models import Project
 
 import recruiters
 from .models import *
@@ -74,9 +75,13 @@ class CompanyRecruiterSerializer(serializers.ModelSerializer):
         
 class JobProfileSerializer(serializers.ModelSerializer) :
     skills = Required_SkillSerializer(source="required_skill_set",many=True)
-    perks = PerkSerializer(source="perk_set",many=True)
+    # perks = PerkSerializer(source="perk_set",many=True)
+    requirements = ResponsbilitiesSerializer(source='responsbilities_set',many=True)
+    perks = PerkSerializer(read_only=True,source='perk')
+    
     # comapny = CompanySerializer()
     class Meta :
         model = JobDetail
         fields = '__all__'
+
         

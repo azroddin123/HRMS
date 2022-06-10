@@ -31,7 +31,6 @@ class JobDetailView(GenericMethodsMixin, APIView):
     serializer_class = JobDetailSerializer
     lookup_field = "id"
 
-
 class PerkView(GenericMethodsMixin, APIView):
     authentication_classes = [CustomAuthentication]
     model = Perk
@@ -56,7 +55,6 @@ class Required_SkillView(GenericMethodsMixin, APIView):
     serializer_class = Required_SkillSerializer
     lookup_field = "id"
 
-
 class CompanyRecruiterView(GenericMethodsMixin,APIView) :
     model = RecruiterDetail
     serializer_class = CompanyRecruiterSerializer
@@ -69,7 +67,7 @@ class GetCandidateProfileView(APIView) :
         applicant_profiles = ApplicantDetail.objects.filter(job_title='Developer')
         
 class JobProfileFinalView(GenericMethodsMixin,APIView) :
-    model = JobDetailView
+    model = JobDetail
     serializer_class = JobProfileSerializer
     lookup_field = 'id'
 
