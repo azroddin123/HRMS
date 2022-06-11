@@ -1,28 +1,26 @@
 from attr import fields
 from numpy import source
 from pyrsistent import field
+from requests import request
 from .models import * 
 from rest_framework import serializers
 
 class ApplicantDetailSerializers(serializers.ModelSerializer) :
+
     class Meta :
         model = ApplicantDetail
         fields = '__all__'
-        
-
 
 class PersonalDetailSerializer(serializers.ModelSerializer) :
     class Meta :
         model = PersonalDetail
         fields = '__all__'
-        
 
 class EducationSerializer(serializers.ModelSerializer) :
     class Meta :
         model = Education
         fields = '__all__'
         
-
 class ExperienceSerializer(serializers.ModelSerializer) :
     class Meta : 
         model = Experience
@@ -42,7 +40,6 @@ class AccomplishmentSerializer(serializers.ModelSerializer) :
     class Meta :
         model = Accomplishment
         fields = '__all__'
-        
         
 class UserProfileSerializer(serializers.ModelSerializer) :
     project = ProjectSerializer(source="project_set",many=True)

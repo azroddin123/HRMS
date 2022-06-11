@@ -1,5 +1,7 @@
 # Create your views here.
 from cgitb import lookup
+
+from yaml import serialize
 from .serializers import *
 from .models import *
 from applicants.serializers import * 
@@ -65,10 +67,15 @@ class GetCandidateProfileView(APIView) :
     def get(self,request,*args,**kwargs) :
         print("In candidate Profile view")
         applicant_profiles = ApplicantDetail.objects.filter(job_title='Developer')
+
         
 class JobProfileFinalView(GenericMethodsMixin,APIView) :
     model = JobDetail
     serializer_class = JobProfileSerializer
     lookup_field = 'id'
+    
+    
+    
+            
 
     

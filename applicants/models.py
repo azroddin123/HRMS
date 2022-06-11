@@ -4,28 +4,25 @@ from accounts.models import MyUser
 # from recruiters.models import * 
 
 class ApplicantDetail(models.Model) :
-    
-    user          = models.ForeignKey(MyUser,on_delete=models.CASCADE,null=True,blank=True)
 
-    fullname      = models.CharField(max_length=200,null=True,blank=True)
-    job_title     = models.CharField(max_length=200,null=True,blank=True)
-    qualification = models.CharField(max_length=200,null=True,blank = True)
-    contact_no    = models.CharField(max_length=200,null=True,blank=True)
-    dateOfBirth   = models.DateField(null=True,blank=True)
-    location      = models.CharField(max_length=100,null=True,blank=True)
-    portfolioLink = models.CharField(max_length=200,null=True,blank=True)
-    resume        = models.FileField(upload_to='resume/',blank=True,null=True)
+    fullname            = models.CharField(max_length=200,null=True,blank=True)
+    job_title           = models.CharField(max_length=200,null=True,blank=True)
+    qualification       = models.CharField(max_length=200,null=True,blank = True)
+    contact_no          = models.CharField(max_length=200,null=True,blank=True)
+    dateOfBirth         = models.DateField(null=True,blank=True)
+    location            = models.CharField(max_length=100,null=True,blank=True)
+    portfolioLink       = models.CharField(max_length=200,null=True,blank=True)
+    resume              = models.FileField(upload_to='resume/',blank=True,null=True)
     
-    created_at    = models.DateTimeField(auto_now_add=True)
-    updated_at    = models.DateTimeField(auto_now=True)
+    created_at          = models.DateTimeField(auto_now_add=True)
+    updated_at          = models.DateTimeField(auto_now=True)
     
+    created_by          = models.OneToOneField(MyUser,on_delete=models.CASCADE,null=True,blank=True)
+  
     # applied_job =  models.ManyToManyField(JobDetail,on_delete=models.CASCADE,null=True,blank=True)
     
     def __str__(self):
         return self.fullname
-
- 
- 
  
 LANG_CHOICES = (
     ("English", "English"),
@@ -59,7 +56,7 @@ class PersonalDetail(models.Model) :
 COURSE_CHOICES = (
     ("10", "10th"),
     ("12", "12th"),
-      ("ITI","ITI"),
+    ("ITI","ITI"),
     ("Graduation","Graduation"),
     ("Diploma","Diploma"),
     ("Post_Graduation","Post_Graduation"),
@@ -68,6 +65,7 @@ COURSE_CHOICES = (
 )   
 
 class Education(models.Model) :
+    
     applicant            = models.ForeignKey(ApplicantDetail,on_delete=models.CASCADE,null=True,blank=True)
    
     eduacation_name      = models.CharField(max_length=200,choices=COURSE_CHOICES,null=True,blank=True)
@@ -87,9 +85,6 @@ class Education(models.Model) :
     
     def __str__(self):
         return self.eduacation_name
-
-# class Graduation(models.Model) :
-
 
 class Experience(models.Model) :
     
@@ -112,8 +107,6 @@ class Experience(models.Model) :
     def __str__(self):
         return self.designation 
 
-    
-
 class Project(models.Model) :
     
     applicant           = models.ForeignKey(ApplicantDetail,on_delete=models.CASCADE,null=True,blank=True)
@@ -122,7 +115,6 @@ class Project(models.Model) :
     description         = models.TextField(null=True,blank=True)
     status              = models.BooleanField(null=True,blank=True,default=False)
     technology          = models.CharField(max_length=200,null=True,blank=True)
-    # duration = models.IntegerField(null=True,blank=True)
     start_date          = models.DateField(null=True,blank=True)
     end_date            = models.DateField(null=True,blank=True)
 

@@ -38,10 +38,12 @@ class LoginApi(APIView):
         print("user is",user.email)
         token = generate_token(user.email)
         print(token)
+        
         if user is None:
             return Response({"message": "User is not registered"},status=status.HTTP_404_NOT_FOUND,)
-        if not user.check_password(raw_password=password):
-            return Response({"status": 400, "message": "Wrong Password"},status=status.HTTP_400_BAD_REQUEST)
+        
+        # if not user.check_password(raw_password=password):
+        #     return Response({"status": 400, "message": "Wrong Password"},status=status.HTTP_400_BAD_REQUEST)
         serializer = MyUserSerializer(user)
         return Response({"message": "User logged in successfully","user_info": serializer.data,"token" : token },status=status.HTTP_200_OK,)
 

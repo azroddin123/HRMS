@@ -68,4 +68,18 @@ class MyUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
     
+
+# class Profile(models.Model) :
+    
+#     fullname = models.CharField(max_length=200,null=True,blank=True)
+#     degree = models.CharField(max_length=200,null=True,blank=True)
+#     email = models.EmailField(max_length=200,null=True,blank=True)
+#     contact_no = models.CharField(max_length=200,null=True,blank=True)
+#     date_of_birth = models.DateField(null=True,blank=True)
+#     NID_no = models.CharField(max_length=200,null=True,blank=True)    
+    
+    
+#     created_by = models.OneToOneField(MyUser,on_delete=models.CASCADE,null=False,blank=False)
+    
+    
     

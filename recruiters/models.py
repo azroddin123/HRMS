@@ -129,7 +129,6 @@ class Required_Skill(models.Model) :
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)  
     
-    
     created_by    = models.ForeignKey(MyUser,on_delete=models.CASCADE)   
     
     def __str__(self):

@@ -7,5 +7,12 @@ admin.site.register(PersonalDetail)
 admin.site.register(Education)
 admin.site.register(Experience)
 admin.site.register(Project)
-admin.site.register(Skill)
+
+
+class SkillAdmin(admin.ModelAdmin):
+    list_display=['id','skill_name']
+
+    
+admin.site.register(Skill,SkillAdmin)
+    
 admin.site.register(Accomplishment)

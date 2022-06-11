@@ -113,7 +113,9 @@ class GenericMethodsMixin:
     def put(self, request, pk, *args, **kwargs):
         filter = {self.lookup: pk}
         object1 = self.model.objects.get(**filter)
-        if request.user != object1.created_by:
+        
+        print(request.user,object1.created_by)
+        if request.user != object1.created_by  :
             return Response(
                 {"message : Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED
             )

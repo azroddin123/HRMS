@@ -17,7 +17,7 @@ class ApplicantDetailView(GenericMethodsMixin,APIView) :
 
 
 class PersonalDetailView(GenericMethodsMixin,APIView) :
-    # authentication_classes = [CustomAuthenticaion]
+    authentication_classes = [CustomAuthentication]
     model = PersonalDetail
     serializer_class = PersonalDetailSerializer
     lookup_field = 'id'
@@ -41,7 +41,7 @@ class ProjectApiView(GenericMethodsMixin,APIView) :
     lookup_field = 'id'
 
 class SkillApiView(GenericMethodsMixin,APIView) :
-    authentication_classes = [CustomAuthentication]
+    # authentication_classes = [CustomAuthentication]
     model = Skill
     serializer_class = SkillSerializer
     lookup_field = 'id'
@@ -57,3 +57,22 @@ class UserProfileApiView(GenericMethodsMixin,APIView) :
     model = ApplicantDetail
     serializer_class = UserProfileSerializer
     lookup_field = 'id'
+
+class AddMultipleSkillView(APIView) :
+    def post(self,request,*args, **kwargs) :
+        skill_list = []
+        skill_data = request.data['skill_name']
+        for item in skill_data :
+            print(item, "Items Printed")
+            skill = Skill(skill_name= item)
+            skill_list.append(skill)
+        response = SkillSerializer(Skill.objects.bulk_create(skill_list),many=True).data
+        
+        print(skill_list)
+        return Response({"Message" : response},status=status.HTTP_201_CREATED)
+# we are creating bulk data in skill table 
+
+
+
+
+

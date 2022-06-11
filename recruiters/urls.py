@@ -31,8 +31,6 @@ urlpatterns = [
     path('required_skill',Required_SkillView.as_view()),
     
     path('company_view/<int:pk>',CompanyRecruiterView.as_view()),
-    
-    
     path('finaljobview/<int:pk>',JobProfileFinalView.as_view())
     
     # path('applicantProfiles',GetCandidateProfileView.as_view())

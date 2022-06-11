@@ -6,7 +6,6 @@ urlpatterns = [
     # path('<int:id>',ApplicantDetailView.as_view()),
     # path('person/<int:id>',PersonDetailView.as_view()),
     
-  
     path('profile/<int:pk>',ApplicantDetailView.as_view()),
     path('profile',ApplicantDetailView.as_view()),
     
@@ -18,7 +17,6 @@ urlpatterns = [
     
     path('experience/<int:pk>',ExperienceApiView.as_view()),
     path('experience',ExperienceApiView.as_view()),
-    
         
     path('project/<int:pk>',ProjectApiView.as_view()),
     path('project',ProjectApiView.as_view()),
@@ -29,6 +27,7 @@ urlpatterns = [
     path('accomplishment/<int:pk>',AccomplishmentApiView.as_view()),
     path('accomplishment',AccomplishmentApiView.as_view()),
     
-    path('userprofileview/<int:pk>',UserProfileApiView.as_view())
+    path('userprofileview/<int:pk>',UserProfileApiView.as_view()),
+    path('multiskill',AddMultipleSkillView.as_view())
     
 ]
