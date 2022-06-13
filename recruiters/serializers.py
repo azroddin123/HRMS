@@ -84,4 +84,8 @@ class JobProfileSerializer(serializers.ModelSerializer) :
         model = JobDetail
         fields = '__all__'
 
+class SalaryAndPerkSerializer(serializers.ModelSerializer) :
+    class Meta :
+        model = SalaryAndPerk
+        fields = '__all__'
         

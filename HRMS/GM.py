@@ -101,9 +101,11 @@ class GenericMethodsMixin:
                 )
 
     def post(self, request, *args, **kwargs):
+        # if request.data['created_by'] : request.data['created_by'] = request.user.id
         serializer = self.serializer(data=request.data)
         print(request.data)
         if serializer.is_valid():
+           
             serializer.save()
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         else:

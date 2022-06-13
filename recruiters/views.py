@@ -1,6 +1,6 @@
 # Create your views here.
 from cgitb import lookup
-
+from random import randint
 from yaml import serialize
 from .serializers import *
 from .models import *
@@ -74,8 +74,26 @@ class JobProfileFinalView(GenericMethodsMixin,APIView) :
     serializer_class = JobProfileSerializer
     lookup_field = 'id'
     
+
+class SalaryAndPerkView(GenericMethodsMixin,APIView) :
+    model = SalaryAndPerk
+    serializer_class = SalaryAndPerkSerializer
+    lookup_field = 'id'
     
-    
-            
+class OTPApiView(APIView) :
+    def get(self,request,*args,**kargs) :
+           otp = str(randint(100000, 999999)) 
+           return Response({"OTP" : otp },status=status.HTTP_200_OK)
+               
+               
 
     
+class AddMultipleSkillApi(APIView) :
+    def post(self,request,*args, **kwargs) :
+        skill_list = []
+        skill_array = request.data["skill_name"]
+        for item in skill_array :
+            skill_list.append(Skill(skill_name=item))
+        return Response({"Success","Multiple Skill Imported"},status=status.HTTP_200_OK)
+        
+        

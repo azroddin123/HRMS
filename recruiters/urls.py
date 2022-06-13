@@ -26,12 +26,20 @@ urlpatterns = [
     
     path('salary/<int:pk>',SalaryView.as_view()),
     path('salary',SalaryView.as_view()),
+    
+     
+    path('salaryandperks/<int:pk>',SalaryAndPerkView.as_view()),
+    path('salaryandperks',SalaryAndPerkView.as_view()),
      
     path('required_skill/<int:pk>',Required_SkillView.as_view()),
     path('required_skill',Required_SkillView.as_view()),
     
     path('company_view/<int:pk>',CompanyRecruiterView.as_view()),
-    path('finaljobview/<int:pk>',JobProfileFinalView.as_view())
+    path('finaljobview/<int:pk>',JobProfileFinalView.as_view()),
+    
+    path('generateotp',OTPApiView.as_view()),
+    
+    path('multiple_required_skill',AddMultipleSkillApi.as_view())
     
     # path('applicantProfiles',GetCandidateProfileView.as_view())
 ]

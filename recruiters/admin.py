@@ -10,6 +10,8 @@ admin.site.register(Responsbilities)
 admin.site.register(Salary)
 admin.site.register(Perk)
 admin.site.register(Required_Skill)
+admin.site.register(SalaryAndPerk)
+
 
 
 
