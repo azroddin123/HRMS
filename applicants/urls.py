@@ -28,6 +28,7 @@ urlpatterns = [
     path('accomplishment',AccomplishmentApiView.as_view()),
     
     path('userprofileview/<int:pk>',UserProfileApiView.as_view()),
-    path('multiskill',AddMultipleSkillView.as_view())
+    path('multiskill',AddMultipleSkillView.as_view()),
     
+    path('searchjobs',SerachJobApiView.as_view())
 ]

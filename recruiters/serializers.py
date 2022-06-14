@@ -14,6 +14,7 @@ class CompanySerializer(serializers.ModelSerializer):
         model  = Company
         fields = "__all__"
         
+# child to parent serializer
 class CompanySerializerInline(serializers.ModelSerializer):
     created_by = MyUserSerializer()
     class Meta:
@@ -24,7 +25,8 @@ class JobDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model  = JobDetail
         fields = "__all__"
-        
+
+
 class RecruiterDetailSerializer(serializers.ModelSerializer):
     jobs = JobDetailSerializer(source="jobdetail_set", many=True)
     class Meta:
@@ -72,7 +74,8 @@ class CompanyRecruiterSerializer(serializers.ModelSerializer):
         except AttributeError:
             return super(CompanyRecruiterSerializer, self).to_representation(instance)
         
-        
+
+# from parent to child serializer
 class JobProfileSerializer(serializers.ModelSerializer) :
     skills = Required_SkillSerializer(source="required_skill_set",many=True)
     # perks = PerkSerializer(source="perk_set",many=True)

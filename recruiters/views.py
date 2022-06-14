@@ -7,6 +7,7 @@ from .models import *
 from applicants.serializers import * 
 from applicants.models import * 
 from HRMS.GM import GenericMethodsMixin
+from HRMS.GM import search3
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -90,10 +91,13 @@ class OTPApiView(APIView) :
     
 class AddMultipleSkillApi(APIView) :
     def post(self,request,*args, **kwargs) :
+        print(request.data)
         skill_list = []
-        skill_array = request.data["skill_name"]
+        skill_array = request.data["skill"]
         for item in skill_array :
-            skill_list.append(Skill(skill_name=item))
-        return Response({"Success","Multiple Skill Imported"},status=status.HTTP_200_OK)
+            skill_list.append(Required_Skill(skill_name=item))
+        
+        Required_Skill.objects.bulk_create(skill_list)
+        return Response({"Success":"Multiple Skill Imported", "skill" : str(skill_list)},status=status.HTTP_201_CREATED)
         
         

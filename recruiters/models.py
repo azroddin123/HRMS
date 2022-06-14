@@ -44,6 +44,8 @@ class RecruiterDetail(models.Model) :
         return self.name
     
 class JobDetail(models.Model) :
+    
+    #recruiter__company="xyz"
     # main job Model 
     recruiter            = models.ForeignKey(RecruiterDetail,on_delete=models.CASCADE,null=True,blank=True)
     
@@ -101,7 +103,9 @@ class SalaryAndPerk(models.Model) :
     snack_lunch         = models.BooleanField(default=False,null=True,blank=True)
     probation_period    = models.BooleanField(default=False,null=True,blank=True)
     created_at          = models.DateTimeField(auto_now_add=True)
-    updated_at          = models.DateTimeField(auto_now=True)   
+    updated_at          = models.DateTimeField(auto_now=True) 
+    
+      
     
     created_by          = models.ForeignKey(MyUser,on_delete=models.CASCADE,null=True,blank=True)  
     
@@ -150,7 +154,7 @@ class Required_Skill(models.Model) :
     created_at    = models.DateTimeField(auto_now_add=True)
     updated_at    = models.DateTimeField(auto_now=True)  
     
-    created_by    = models.ForeignKey(MyUser,on_delete=models.CASCADE)   
+    created_by    = models.ForeignKey(MyUser,on_delete=models.CASCADE,null=True,blank=True)   
     
     def __str__(self):
             return str(self.skill_name)
